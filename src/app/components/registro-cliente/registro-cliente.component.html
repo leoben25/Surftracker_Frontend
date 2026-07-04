@@ -1,0 +1,95 @@
+<app-menu></app-menu>
+
+<div class="container">
+  <div class="titulo">
+    <h2>Registro de Cliente</h2>
+  </div>
+
+  <form [formGroup]="forms" (ngSubmit)="registrarCliente()" class="formulario">
+    <div class="row">
+      <div class="col">
+        <label>Nombres</label>
+        <input formControlName="nombres" placeholder="Ingrese nombres">
+        <small *ngIf="forms.get('nombres')?.touched && forms.get('nombres')?.invalid">
+          Los nombres son obligatorios.
+        </small>
+      </div>
+
+      <div class="col">
+        <label>Apellidos</label>
+        <input formControlName="apellidos" placeholder="Ingrese apellidos">
+        <small *ngIf="forms.get('apellidos')?.touched && forms.get('apellidos')?.invalid">
+          Los apellidos son obligatorios.
+        </small>
+      </div>
+
+      <div class="col">
+        <label>DNI</label>
+        <input formControlName="dni" placeholder="12345678">
+        <small *ngIf="forms.get('dni')?.touched && forms.get('dni')?.invalid">
+          El DNI debe tener 8 números.
+        </small>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label>Login</label>
+        <input formControlName="login" placeholder="usuario">
+        <small *ngIf="forms.get('login')?.touched && forms.get('login')?.invalid">
+          El login debe tener entre 4 y 15 caracteres.
+        </small>
+      </div>
+
+      <div class="col">
+        <label>Contraseña</label>
+        <input type="password" formControlName="password" placeholder="mínimo 6 caracteres">
+        <small *ngIf="forms.get('password')?.touched && forms.get('password')?.invalid">
+          La contraseña debe tener mínimo 6 caracteres.
+        </small>
+      </div>
+
+      <div class="col">
+        <label>Correo</label>
+        <input formControlName="correo" placeholder="correo@ejemplo.com">
+        <small *ngIf="forms.get('correo')?.touched && forms.get('correo')?.invalid">
+          Ingrese un correo válido.
+        </small>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label>Teléfono</label>
+        <input formControlName="telefono" placeholder="987654321">
+        <small *ngIf="forms.get('telefono')?.touched && forms.get('telefono')?.invalid">
+          El teléfono debe tener 9 números.
+        </small>
+      </div>
+
+      <div class="col">
+        <label>Fecha de nacimiento</label>
+        <input type="date" formControlName="fechanacimiento">
+        <small *ngIf="forms.get('fechanacimiento')?.touched && forms.get('fechanacimiento')?.invalid">
+          Seleccione una fecha.
+        </small>
+      </div>
+
+      <div class="col">
+        <label>Dirección</label>
+        <input formControlName="direccion" placeholder="Dirección">
+        <small *ngIf="forms.get('direccion')?.touched && forms.get('direccion')?.invalid">
+          La dirección es obligatoria.
+        </small>
+      </div>
+    </div>
+
+    <div class="acciones">
+      <button type="submit">Enviar</button>
+    </div>
+  </form>
+
+  <div *ngIf="mensaje" class="mensaje" [class.exito]="tipoMensaje === 'exito'" [class.error]="tipoMensaje === 'error'">
+    {{ mensaje }}
+  </div>
+</div>

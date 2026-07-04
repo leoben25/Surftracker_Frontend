@@ -1,0 +1,70 @@
+.portada {
+  min-height: calc(100vh - 60px);
+  background: linear-gradient(135deg, #e9f5f6, #f8fbfb);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tarjeta-portada {
+  width: 520px;
+  height: 340px;
+  background: white;
+  border-radius: 22px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.circulo-sol {
+  width: 78px;
+  height: 78px;
+  background: #f0c24b;
+  border-radius: 50%;
+  position: absolute;
+  top: 52px;
+  right: 78px;
+}
+
+.icono-mar {
+  width: 260px;
+  height: 110px;
+  position: relative;
+  margin-top: 10px;
+}
+
+.ola {
+  position: absolute;
+  width: 220px;
+  height: 60px;
+  border: 6px solid #0a7378;
+  border-color: #0a7378 transparent transparent transparent;
+  border-radius: 50%;
+}
+
+.ola1 {
+  top: 0;
+  left: 20px;
+}
+
+.ola2 {
+  top: 28px;
+  left: 10px;
+}
+
+.ola3 {
+  top: 56px;
+  left: 28px;
+}
+
+h1 {
+  color: #0a7378;
+  font-size: 42px;
+  margin-top: 30px;
+  margin-bottom: 0;
+  letter-spacing: 1px;
+}
