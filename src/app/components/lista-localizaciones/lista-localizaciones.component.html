@@ -1,0 +1,32 @@
+<app-menu></app-menu>
+
+<div class="container">
+  <div class="titulo">
+    <h2>Lista de Localizaciones</h2>
+  </div>
+
+  <table *ngIf="localizaciones.length > 0; else sinDatos">
+    <thead>
+      <tr>
+        <th>Playa</th>
+        <th>Distrito</th>
+        <th>Provincia</th>
+        <th>Departamento</th>
+        <th>País</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let localizacion of localizaciones">
+        <td>{{ localizacion.nombrePlaya }}</td>
+        <td>{{ localizacion.distrito || '-' }}</td>
+        <td>{{ localizacion.provincia || '-' }}</td>
+        <td>{{ localizacion.departamento || '-' }}</td>
+        <td>{{ localizacion.pais || '-' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #sinDatos>
+    <p class="sin-datos">No hay localizaciones registradas.</p>
+  </ng-template>
+</div>

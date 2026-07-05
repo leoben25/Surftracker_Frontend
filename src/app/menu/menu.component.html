@@ -3,7 +3,10 @@
 
   <div class="menu-links">
     <a routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
-    <a routerLink="/registrar-cliente" routerLinkActive="activo">Registrar cliente</a>
-    <a routerLink="/registrar-localizacion" routerLinkActive="activo">Registrar localización</a>
+    <a *ngIf="!isLoggedIn" routerLink="/registrar-usuario" routerLinkActive="activo">Registrar usuario</a>
+    <a *ngIf="isLoggedIn && isAdmin" routerLink="/registrar-localizacion" routerLinkActive="activo">Registrar localización</a>
+    <a *ngIf="isLoggedIn" href="javascript:void(0)" (click)="irAListaLocalizaciones()">Lista de Localizaciones</a>
+    <a *ngIf="!isLoggedIn" routerLink="/login" routerLinkActive="activo">Login</a>
+    <a *ngIf="isLoggedIn" href="#" (click)="cerrarSesion()">Cerrar sesión</a>
   </div>
 </nav>

@@ -1,0 +1,35 @@
+<app-menu></app-menu>
+
+<div class="container">
+  <div class="titulo">
+    <h2>Iniciar sesión</h2>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="iniciarSesion()" class="formulario">
+    <div class="row">
+      <div class="col">
+        <label>Login</label>
+        <input formControlName="login" placeholder="Ingrese su login">
+        <small *ngIf="form.get('login')?.touched && form.get('login')?.invalid">
+          El login es obligatorio.
+        </small>
+      </div>
+
+      <div class="col">
+        <label>Contraseña</label>
+        <input type="password" formControlName="password" placeholder="Ingrese su contraseña">
+        <small *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+          La contraseña es obligatoria.
+        </small>
+      </div>
+    </div>
+
+    <div class="acciones">
+      <button type="submit">Ingresar</button>
+    </div>
+  </form>
+
+  <div *ngIf="mensaje" class="mensaje" [class.exito]="tipoMensaje === 'exito'" [class.error]="tipoMensaje === 'error'">
+    {{ mensaje }}
+  </div>
+</div>

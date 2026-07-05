@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MenuComponent } from '../../menu/menu.component';
 import { ApiService } from '../../services/api.service';
-import { Cliente } from '../../models/cliente.model';
+import { Usuario } from '../../models/usuario.model';
 
 @Component({
   selector: 'app-registro-cliente',
@@ -32,7 +32,7 @@ export class RegistroClienteComponent {
     });
   }
 
-  registrarCliente(): void {
+  registrarUsuario(): void {
     this.mensaje = '';
     this.tipoMensaje = '';
 
@@ -43,12 +43,17 @@ export class RegistroClienteComponent {
       return;
     }
 
-    const objCliente: Cliente = this.forms.value;
+    const objUsuario: Usuario = {
+      ...this.forms.value,
+      fecharegistro: new Date().toISOString().split('T')[0],
+      estado: 'ACTIVO',
+      rol: 'CLIENTE'
+    };
 
-    this.apiService.registrarCliente(objCliente).subscribe({
+    this.apiService.registrarUsuario(objUsuario).subscribe({
       next: () => {
         this.tipoMensaje = 'exito';
-        this.mensaje = 'Cliente registrado correctamente.';
+        this.mensaje = 'Usuario registrado correctamente.';
         this.forms.reset();
       },
       error: (error) => {
@@ -73,6 +78,6 @@ export class RegistroClienteComponent {
       return error.error.detalle;
     }
 
-    return 'No se pudo registrar el cliente. Verifique que el backend esté activo.';
+    return 'No se pudo registrar el usuario. Verifique que el backend esté activo.';
   }
 }
