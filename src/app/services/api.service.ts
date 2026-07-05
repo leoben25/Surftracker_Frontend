@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Cliente } from '../models/cliente.model';
+import { Observable, map } from 'rxjs';
+import { Usuario } from '../models/usuario.model';
 import { Localizacion } from '../models/localizacion.model';
 
 @Injectable({
@@ -13,8 +13,14 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  registrarCliente(data: Cliente): Observable<any> {
-    return this.http.post(`${this.baseUrl}/clientes/registro`, data);
+  registrarUsuario(data: Usuario): Observable<any> {
+    return this.http.post(`${this.baseUrl}/usuarios/registrarUsuario`, data);
+  }
+
+  loginUsuario(login: string, password: string): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.baseUrl}/usuarios`).pipe(
+      map((usuarios) => usuarios.filter((usuario) => usuario.login === login && usuario.password === password))
+    );
   }
 
   registrarLocalizacion(data: Localizacion): Observable<any> {

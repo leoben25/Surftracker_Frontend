@@ -18,7 +18,10 @@ export class RegistroClienteComponent {
   mensaje = '';
   tipoMensaje: 'exito' | 'error' | '' = '';
 
-  constructor(private fb: FormBuilder, private clienteService: ClienteService) {
+  constructor(
+    private fb: FormBuilder,
+    private clienteService: ClienteService
+  ) {
     this.forms = this.fb.group({
       nombres: ['', [Validators.required, Validators.minLength(2)]],
       apellidos: ['', [Validators.required, Validators.minLength(2)]],
@@ -58,6 +61,10 @@ export class RegistroClienteComponent {
     });
   }
 
+  registrarUsuario(): void {
+    this.registrarCliente();
+  }
+
   obtenerMensajeError(error: any): string {
     if (error?.error?.errores) {
       return Object.keys(error.error.errores)
@@ -71,6 +78,10 @@ export class RegistroClienteComponent {
 
     if (error?.error?.detalle) {
       return error.error.detalle;
+    }
+
+    if (typeof error?.error === 'string') {
+      return error.error;
     }
 
     return 'No se pudo registrar el cliente. Verifique que el backend esté activo.';
