@@ -46,6 +46,18 @@
       Preferencias
     </a>
 
+    <a *ngIf="isLoggedIn" routerLink="/consulta-pronostico" routerLinkActive="activo">
+      Consulta Pronóstico
+    </a>
+
+    <a *ngIf="isLoggedIn" routerLink="/registro-observacion" routerLinkActive="activo">
+      Registrar Observación
+    </a>
+
+    <a *ngIf="isLoggedIn" routerLink="/registro-reporte" routerLinkActive="activo">
+      Registrar Reporte
+    </a>
+
     <a *ngIf="isLoggedIn" href="javascript:void(0)" (click)="cerrarSesion()">
       Cerrar sesión
     </a>

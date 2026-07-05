@@ -1,0 +1,74 @@
+<app-menu></app-menu>
+
+<div class="container">
+  <div class="titulo">
+    <h2>Registro de Observación Real</h2>
+  </div>
+
+  <form [formGroup]="forms" (ngSubmit)="registrarObservacion()" class="formulario">
+    <div class="row">
+      <div class="col">
+        <label>Localización / Playa</label>
+        <select formControlName="localizacion">
+          <option [ngValue]="null" disabled selected>Seleccione una localización</option>
+          <option *ngFor="let loc of listaLocalizaciones" [ngValue]="loc">
+            {{ loc.nombrePlaya }}
+          </option>
+        </select>
+        <small *ngIf="forms.get('localizacion')?.touched && forms.get('localizacion')?.invalid">
+          La localización es obligatoria.
+        </small>
+      </div>
+
+      <div class="col">
+        <label>Fecha de Observación</label>
+        <input type="date" formControlName="fechaObservacion">
+        <small *ngIf="forms.get('fechaObservacion')?.touched && forms.get('fechaObservacion')?.invalid">
+          Seleccione una fecha válida.
+        </small>
+      </div>
+
+      <div class="col">
+        <label>Temperatura Real (°C)</label>
+        <input type="number" step="0.1" formControlName="temperaturaReal" placeholder="Ingrese temperatura">
+        <small *ngIf="forms.get('temperaturaReal')?.touched && forms.get('temperaturaReal')?.invalid">
+          La temperatura es obligatoria.
+        </small>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label>Altura de Olas Real (m)</label>
+        <input type="number" step="0.01" formControlName="alturaOlasReal" placeholder="Ingrese altura de olas">
+        <small *ngIf="forms.get('alturaOlasReal')?.touched && forms.get('alturaOlasReal')?.invalid">
+          La altura de olas es obligatoria.
+        </small>
+      </div>
+
+      <div class="col">
+        <label>Velocidad del Viento Real (km/h)</label>
+        <input type="number" step="0.1" formControlName="velocidadVientoReal" placeholder="Ingrese velocidad del viento">
+        <small *ngIf="forms.get('velocidadVientoReal')?.touched && forms.get('velocidadVientoReal')?.invalid">
+          La velocidad del viento es obligatoria.
+        </small>
+      </div>
+
+      <div class="col">
+        <label>Descripción / Comentarios</label>
+        <input formControlName="descripcion" placeholder="Ingrese una descripción corta">
+        <small *ngIf="forms.get('descripcion')?.touched && forms.get('descripcion')?.invalid">
+          La descripción no es válida o excede el límite.
+        </small>
+      </div>
+    </div>
+
+    <div class="acciones">
+      <button type="submit">Enviar</button>
+    </div>
+  </form>
+
+  <div *ngIf="mensaje" class="mensaje" [class.exito]="tipoMensaje === 'exito'" [class.error]="tipoMensaje === 'error'">
+    {{ mensaje }}
+  </div>
+</div>
