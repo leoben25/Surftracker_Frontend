@@ -1,0 +1,81 @@
+<app-menu></app-menu>
+
+<div class="container">
+  <div class="titulo">
+    <h2>Consulta de Pronósticos</h2>
+  </div>
+
+  <div class="filtros">
+    <div class="campo">
+      <label>Localización</label>
+      <select [(ngModel)]="idLocalizacion">
+        <option value="">Seleccione una playa</option>
+        <option *ngFor="let item of localizaciones" [value]="obtenerIdLocalizacion(item)">
+          {{ obtenerNombreLocalizacion(item) }} - {{ item.distrito || 'Sin distrito' }}
+        </option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Fecha</label>
+      <input type="date" [(ngModel)]="fecha">
+    </div>
+
+    <div class="campo">
+      <label>Desde</label>
+      <input type="date" [(ngModel)]="desde">
+    </div>
+
+    <div class="campo">
+      <label>Hasta</label>
+      <input type="date" [(ngModel)]="hasta">
+    </div>
+  </div>
+
+  <div class="acciones">
+    <button type="button" (click)="listarTodos()">Listar todos</button>
+    <button type="button" (click)="buscarPorLocalizacion()">Buscar por playa</button>
+    <button type="button" (click)="buscarPorFecha()">Buscar por fecha</button>
+    <button type="button" (click)="buscarPorRango()">Buscar por rango</button>
+  </div>
+
+  <div *ngIf="mensaje" class="mensaje" [class.exito]="tipoMensaje === 'exito'" [class.error]="tipoMensaje === 'error'">
+    {{ mensaje }}
+  </div>
+
+  <div class="tabla-contenedor" *ngIf="pronosticos.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Localización</th>
+          <th>Fecha</th>
+          <th>Temperatura</th>
+          <th>Altura Olas</th>
+          <th>Periodo Olas</th>
+          <th>Dirección Olas</th>
+          <th>Viento</th>
+          <th>Humedad</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of pronosticos">
+          <td>{{ item.idPronostico || '-' }}</td>
+          <td>{{ item.idLocalizacion || '-' }}</td>
+          <td>{{ item.fechaPronostico || '-' }}</td>
+          <td>{{ item.temperatura || '-' }}</td>
+          <td>{{ item.alturaOlas || '-' }}</td>
+          <td>{{ item.periodoOlas || '-' }}</td>
+          <td>{{ item.direccionOlas || '-' }}</td>
+          <td>{{ item.velocidadViento || '-' }}</td>
+          <td>{{ item.humedad || '-' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p *ngIf="pronosticos.length === 0 && !mensaje" class="vacio">
+    No hay pronósticos registrados.
+  </p>
+</div>

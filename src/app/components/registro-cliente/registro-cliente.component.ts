@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MenuComponent } from '../../menu/menu.component';
-import { ApiService } from '../../services/api.service';
+import { ClienteService } from '../../services/cliente-service';
 import { Cliente } from '../../models/cliente.model';
 
 @Component({
@@ -18,7 +18,7 @@ export class RegistroClienteComponent {
   mensaje = '';
   tipoMensaje: 'exito' | 'error' | '' = '';
 
-  constructor(private fb: FormBuilder, private apiService: ApiService) {
+  constructor(private fb: FormBuilder, private clienteService: ClienteService) {
     this.forms = this.fb.group({
       nombres: ['', [Validators.required, Validators.minLength(2)]],
       apellidos: ['', [Validators.required, Validators.minLength(2)]],
@@ -45,7 +45,7 @@ export class RegistroClienteComponent {
 
     const objCliente: Cliente = this.forms.value;
 
-    this.apiService.registrarCliente(objCliente).subscribe({
+    this.clienteService.registrarCliente(objCliente).subscribe({
       next: () => {
         this.tipoMensaje = 'exito';
         this.mensaje = 'Cliente registrado correctamente.';

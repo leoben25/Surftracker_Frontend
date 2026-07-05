@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MenuComponent } from '../../menu/menu.component';
-import { ApiService } from '../../services/api.service';
+import { LocalizacionService } from '../../services/localizacion-service';
 import { Localizacion } from '../../models/localizacion.model';
 
 @Component({
@@ -18,7 +18,10 @@ export class RegistroLocalizacionComponent {
   mensaje = '';
   tipoMensaje: 'exito' | 'error' | '' = '';
 
-  constructor(private fb: FormBuilder, private apiService: ApiService) {
+  constructor(
+    private fb: FormBuilder,
+    private localizacionService: LocalizacionService
+  ) {
     this.forms = this.fb.group({
       nombrePlaya: ['', [Validators.required]],
       distrito: [''],
@@ -43,7 +46,7 @@ export class RegistroLocalizacionComponent {
 
     const objLocalizacion: Localizacion = this.forms.value;
 
-    this.apiService.registrarLocalizacion(objLocalizacion).subscribe({
+    this.localizacionService.registrarLocalizacion(objLocalizacion).subscribe({
       next: () => {
         this.tipoMensaje = 'exito';
         this.mensaje = 'Localización registrada correctamente.';
@@ -51,10 +54,26 @@ export class RegistroLocalizacionComponent {
           pais: 'Perú'
         });
       },
-      error: () => {
+      error: (error) => {
         this.tipoMensaje = 'error';
-        this.mensaje = 'No se pudo registrar la localización. Verifique que el backend esté activo.';
+        this.mensaje = this.obtenerMensajeError(error);
       }
     });
+  }
+
+  obtenerMensajeError(error: any): string {
+    if (error?.error?.mensaje) {
+      return error.error.mensaje;
+    }
+
+    if (error?.error?.detalle) {
+      return error.error.detalle;
+    }
+
+    if (typeof error?.error === 'string') {
+      return error.error;
+    }
+
+    return 'No se pudo registrar la localización. Verifique que el backend esté activo.';
   }
 }
