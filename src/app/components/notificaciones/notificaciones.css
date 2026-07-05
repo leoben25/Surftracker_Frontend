@@ -1,0 +1,90 @@
+﻿.container {
+  width: min(1100px, 92%);
+  margin: 28px auto;
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.titulo {
+  background: #006d77;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.titulo h2 {
+  margin: 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #b7c9cc;
+  border-radius: 6px;
+}
+
+small {
+  display: block;
+  color: #c62828;
+  margin-top: 4px;
+  font-weight: bold;
+}
+
+.acciones {
+  text-align: center;
+  margin-top: 12px;
+}
+
+button {
+  background: #006d77;
+  color: white;
+  border: none;
+  padding: 11px 26px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #00535b;
+}
+
+.mensaje {
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.exito {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.error {
+  background: #ffebee;
+  color: #c62828;
+}
+
+@media (max-width: 850px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}

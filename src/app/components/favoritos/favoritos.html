@@ -1,0 +1,10 @@
+﻿<app-menu></app-menu>
+
+<div class="container mt-4">
+  <h2>Mis Localizaciones Favoritas</h2>
+  <ul>
+    <li *ngFor="let fav of listaFavoritos">
+      Localizaci├│n ID: {{ fav.localizacion.id }} - Agregado el: {{ fav.fechaAgregado }}
+    </li>
+  </ul>
+</div>

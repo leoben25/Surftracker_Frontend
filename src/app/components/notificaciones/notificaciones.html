@@ -1,0 +1,14 @@
+﻿<app-menu></app-menu>
+
+<div class="notifications-panel">
+  <h3>Alertas y Notificaciones</h3>
+  <div *ngFor="let n of notificaciones" [style.background-color]="n.estadoLectura === 'no leida' ? '#f0f8ff' : '#fff'" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 5px;">
+    <h4>{{ n.titulo }} <span [style.color]="n.nivelRiesgo === 'alto' ? 'red' : 'orange'">({{ n.nivelRiesgo }})</span></h4>
+    <p>{{ n.mensaje }}</p>
+    <small>Enviado: {{ n.fechaEnvio | date:'short' }}</small>
+    
+    <button *ngIf="n.estadoLectura === 'no leida'" (click)="marcarLeida(n.id)" style="margin-left: 15px;">
+      Marcar como le├¡da
+    </button>
+  </div>
+</div>

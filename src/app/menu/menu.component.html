@@ -30,6 +30,22 @@
       Consultar Pronósticos
     </a>
 
+    <a *ngIf="isLoggedIn" routerLink="/favoritos" routerLinkActive="activo">
+      Favoritos
+    </a>
+
+    <a *ngIf="isLoggedIn" routerLink="/feedback" routerLinkActive="activo">
+      Feedback
+    </a>
+
+    <a *ngIf="isLoggedIn" routerLink="/notificaciones" routerLinkActive="activo">
+      Notificaciones
+    </a>
+
+    <a *ngIf="isLoggedIn" routerLink="/preferencias" routerLinkActive="activo">
+      Preferencias
+    </a>
+
     <a *ngIf="isLoggedIn" href="javascript:void(0)" (click)="cerrarSesion()">
       Cerrar sesión
     </a>
