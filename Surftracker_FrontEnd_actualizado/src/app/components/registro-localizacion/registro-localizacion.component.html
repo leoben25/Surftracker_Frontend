@@ -1,0 +1,61 @@
+<app-menu></app-menu>
+
+<div class="container">
+  <div class="titulo">
+    <h2>Registro de Localización</h2>
+  </div>
+
+  <form [formGroup]="forms" (ngSubmit)="registrarLocalizacion()" class="formulario">
+    <div class="row">
+      <div class="col">
+        <label>Nombre de playa</label>
+        <input formControlName="nombrePlaya" placeholder="Ejemplo: Playa Makaha">
+        <small *ngIf="forms.get('nombrePlaya')?.touched && forms.get('nombrePlaya')?.invalid">
+          El nombre de la playa es obligatorio.
+        </small>
+      </div>
+
+      <div class="col">
+        <label>Distrito</label>
+        <input formControlName="distrito" placeholder="Distrito">
+      </div>
+
+      <div class="col">
+        <label>Provincia</label>
+        <input formControlName="provincia" placeholder="Provincia">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label>Departamento</label>
+        <input formControlName="departamento" placeholder="Departamento">
+      </div>
+
+      <div class="col">
+        <label>País</label>
+        <input formControlName="pais" placeholder="País">
+      </div>
+
+      <div class="col">
+        <label>Latitud</label>
+        <input type="number" formControlName="latitud" placeholder="-12.123456">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label>Longitud</label>
+        <input type="number" formControlName="longitud" placeholder="-77.123456">
+      </div>
+    </div>
+
+    <div class="acciones">
+      <button type="submit">Enviar</button>
+    </div>
+  </form>
+
+  <div *ngIf="mensaje" class="mensaje" [class.exito]="tipoMensaje === 'exito'" [class.error]="tipoMensaje === 'error'">
+    {{ mensaje }}
+  </div>
+</div>

@@ -1,0 +1,41 @@
+.menu {
+  background: #006d77;
+  color: white;
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.menu-logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.menu-links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.menu-links a {
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.menu-links a:hover,
+.menu-links a.activo {
+  background: white;
+  color: #006d77;
+}
+
+@media (max-width: 700px) {
+  .menu {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
