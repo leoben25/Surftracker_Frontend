@@ -1,0 +1,32 @@
+
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #b7c9cc;
+  border-radius: 6px;
+  background-color: white;
+}
+
+
+.tabla-datos {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.tabla-datos th, .tabla-datos td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tabla-datos th {
+  background-color: #f4f7f6;
+  color: #006d77;
+  font-weight: bold;
+}
+
+.tabla-datos tr:hover {
+  background-color: #f9fbfb;
+}
