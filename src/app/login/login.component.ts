@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { MenuComponent } from '../menu/menu.component';
 import { ApiService } from '../services/api.service';
 import { AuthService } from '../services/auth.service';
-import { Usuario } from '../models/usuario.model';
 
 @Component({
   selector: 'app-login',
@@ -45,21 +44,22 @@ export class LoginComponent {
     const { login, password } = this.form.value;
 
     this.apiService.loginUsuario(login, password).subscribe({
-      next: (usuarios) => {
-        if (usuarios.length > 0) {
-          const usuario: Usuario = usuarios[0];
-          this.authService.login(usuario);
-          this.tipoMensaje = 'exito';
-          this.mensaje = `Bienvenido, ${usuario.login}.`;
-          this.router.navigate(['/']);
-        } else {
-          this.tipoMensaje = 'error';
-          this.mensaje = 'Login o contraseña incorrectos.';
-        }
+      next: (usuario) => {
+        this.authService.login(usuario);
+
+        this.tipoMensaje = 'exito';
+        this.mensaje = `Bienvenido, ${usuario.login}.`;
+
+        this.router.navigate(['/']);
       },
-      error: () => {
+      error: (error) => {
         this.tipoMensaje = 'error';
-        this.mensaje = 'No se pudo validar el usuario. Verifique que el backend esté activo.';
+
+        if (error.status === 401) {
+          this.mensaje = 'Login o contraseña incorrectos.';
+        } else {
+          this.mensaje = 'No se pudo validar el usuario. Verifique que el backend esté activo.';
+        }
       }
     });
   }
