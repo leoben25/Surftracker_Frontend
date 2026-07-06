@@ -1,32 +1,93 @@
 <app-menu></app-menu>
 
-<div class="container">
-  <div class="titulo">
-    <h2>Lista de Localizaciones</h2>
+<div class="localizaciones-page">
+
+  <div class="container">
+
+    <div class="titulo">
+      <h2>Lista de Localizaciones</h2>
+      <p>Consulta las playas registradas en SurfTracker.</p>
+    </div>
+
+    <div class="resumen">
+      <div>
+        <span>Total de localizaciones</span>
+        <strong>{{ localizaciones.length }}</strong>
+      </div>
+
+      <div>
+        <span>Resultados visibles</span>
+        <strong>{{ localizacionesFiltradas.length }}</strong>
+      </div>
+    </div>
+
+    <div class="buscador">
+      <div class="campo">
+        <label>Buscar localización</label>
+        <input
+          type="text"
+          [(ngModel)]="textoBusqueda"
+          (input)="filtrarLocalizaciones()"
+          placeholder="Buscar por playa, distrito, provincia, departamento o país"
+        >
+      </div>
+
+      <button type="button" class="btn-secundario" (click)="limpiarBusqueda()">
+        Limpiar
+      </button>
+    </div>
+
+    <div class="tabla-contenedor" *ngIf="localizacionesFiltradas.length > 0; else sinDatos">
+      <table>
+        <thead>
+          <tr>
+            <th>Playa</th>
+            <th>Distrito</th>
+            <th>Provincia</th>
+            <th>Departamento</th>
+            <th>País</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let localizacion of localizacionesFiltradas">
+            <td>{{ localizacion.nombrePlaya || 'Playa sin nombre' }}</td>
+            <td>{{ localizacion.distrito || '-' }}</td>
+            <td>{{ localizacion.provincia || '-' }}</td>
+            <td>{{ localizacion.departamento || '-' }}</td>
+            <td>{{ localizacion.pais || '-' }}</td>
+
+            <td class="acciones">
+              <button
+                type="button"
+                class="btn-favorito"
+                [class.favorito-ok]="esFavorito(localizacion)"
+                (click)="agregarAFavoritos(localizacion)"
+              >
+                {{ esFavorito(localizacion) ? 'Favorito' : 'Agregar' }}
+              </button>
+
+              <button
+                *ngIf="isAdmin"
+                type="button"
+                class="btn-eliminar"
+                (click)="eliminarLocalizacion(localizacion)"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #sinDatos>
+      <div class="sin-datos">
+        No hay localizaciones para mostrar.
+      </div>
+    </ng-template>
+
   </div>
 
-  <table *ngIf="localizaciones.length > 0; else sinDatos">
-    <thead>
-      <tr>
-        <th>Playa</th>
-        <th>Distrito</th>
-        <th>Provincia</th>
-        <th>Departamento</th>
-        <th>País</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let localizacion of localizaciones">
-        <td>{{ localizacion.nombrePlaya }}</td>
-        <td>{{ localizacion.distrito || '-' }}</td>
-        <td>{{ localizacion.provincia || '-' }}</td>
-        <td>{{ localizacion.departamento || '-' }}</td>
-        <td>{{ localizacion.pais || '-' }}</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <ng-template #sinDatos>
-    <p class="sin-datos">No hay localizaciones registradas.</p>
-  </ng-template>
 </div>

@@ -32,7 +32,15 @@ export class ApiService {
     return this.http.get<Localizacion[]>(`${this.baseUrl}/localizaciones/listaTodos`);
   }
 
-    listaPorLocalizacion(idLocalizacion: number): Observable<any> {
+  buscarLocalizacionPorId(id: number): Observable<any> {
+  return this.http.get<any>(`${this.baseUrl}/localizaciones/${id}`);
+}
+
+eliminarLocalizacion(id: number): Observable<any> {
+  return this.http.delete(`${this.baseUrl}/localizaciones/eliminarLocalizacion/${id}`);
+}
+
+  listaPorLocalizacion(idLocalizacion: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/pronosticos/listaPorLocalizacion/${idLocalizacion}`);
   }
 
@@ -59,5 +67,17 @@ export class ApiService {
   listarReportesPorFecha(fecha: string): Observable<any> {
     const params = new HttpParams().set('fecha', fecha);
     return this.http.get(`${this.baseUrl}/reportepresicion/listaPorFecha`, { params });
+  }
+
+  listarUsuarios(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/usuarios`);
+  }
+
+  buscarUsuarioPorId(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/usuarios/${id}`);
+  }
+
+  eliminarUsuario(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/usuarios/${id}`);
   }
 }

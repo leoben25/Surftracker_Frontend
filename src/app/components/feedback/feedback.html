@@ -16,7 +16,7 @@
             <label>Pronóstico</label>
             <select formControlName="idPronostico">
               <option value="">Seleccione un pronóstico</option>
-              <option *ngFor="let item of listaPronosticos" [value]="item.idPronostico">
+              <option *ngFor="let item of listaPronosticos" [value]="obtenerIdPronosticoItem(item)">
                 {{ obtenerTextoPronostico(item) }}
               </option>
             </select>
@@ -105,7 +105,7 @@
             <tr *ngFor="let item of listaFeedbacksFiltrados">
               <td>{{ obtenerIdFeedback(item) }}</td>
               <td>{{ obtenerUsuario(item) }}</td>
-              <td>{{ obtenerIdPronostico(item) }}</td>
+              <td>{{ obtenerTextoPronostico(item.pronostico) }}</td>
               <td>{{ item.calificacion }} / 5</td>
               <td>{{ item.comentario }}</td>
               <td>{{ item.fechaFeedback || '-' }}</td>

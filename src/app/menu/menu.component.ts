@@ -26,7 +26,8 @@ export class MenuComponent implements OnInit {
   private actualizarEstado(): void {
     const currentUser = this.authService.getCurrentUser();
     this.isLoggedIn = this.authService.isAuthenticated();
-    this.isAdmin = currentUser?.rol === 'ADMIN';
+    const rol = (currentUser?.rol || '').toUpperCase();
+    this.isAdmin = rol === 'ADMIN' || rol === 'ROLE_ADMIN';
   }
 
   irAListaLocalizaciones(): void {

@@ -1,0 +1,92 @@
+<app-menu></app-menu>
+
+<div class="usuarios-page">
+
+  <div class="container">
+
+    <div class="titulo">
+      <h2>Lista de Usuarios Registrados</h2>
+      <p>Consulta y administra los usuarios registrados en SurfTracker.</p>
+    </div>
+
+    <div class="resumen">
+      <div>
+        <span>Total de usuarios</span>
+        <strong>{{ usuarios.length }}</strong>
+      </div>
+
+      <div>
+        <span>Resultados visibles</span>
+        <strong>{{ usuariosFiltrados.length }}</strong>
+      </div>
+    </div>
+
+    <div class="buscador">
+      <div class="campo">
+        <label>Buscar usuario</label>
+        <input
+          type="text"
+          [(ngModel)]="textoBusqueda"
+          (input)="filtrarUsuarios()"
+          placeholder="Buscar por nombre, login, correo, rol o estado"
+        >
+      </div>
+
+      <button type="button" class="btn-secundario" (click)="limpiarBusqueda()">
+        Limpiar
+      </button>
+    </div>
+
+    <div *ngIf="mensaje" class="mensaje" [class.exito]="tipoMensaje === 'exito'" [class.error]="tipoMensaje === 'error'">
+      {{ mensaje }}
+    </div>
+
+    <div class="tabla-contenedor" *ngIf="usuariosFiltrados.length > 0; else sinUsuarios">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre completo</th>
+            <th>Login</th>
+            <th>Correo</th>
+            <th>Teléfono</th>
+            <th>Rol</th>
+            <th>Estado</th>
+            <th>Fecha registro</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let usuario of usuariosFiltrados">
+            <td>{{ obtenerIdUsuario(usuario) }}</td>
+            <td>{{ obtenerNombreCompleto(usuario) }}</td>
+            <td>{{ usuario.login || '-' }}</td>
+            <td>{{ usuario.correo || '-' }}</td>
+            <td>{{ usuario.telefono || '-' }}</td>
+            <td>
+              <span class="badge" [class.admin]="obtenerRol(usuario).toUpperCase() === 'ADMIN'">
+                {{ obtenerRol(usuario) }}
+              </span>
+            </td>
+            <td>{{ obtenerEstado(usuario) }}</td>
+            <td>{{ usuario.fecharegistro || '-' }}</td>
+            <td>
+              <button type="button" class="btn-eliminar" (click)="eliminarUsuario(usuario)">
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #sinUsuarios>
+      <div class="sin-datos">
+        No hay usuarios para mostrar.
+      </div>
+    </ng-template>
+
+  </div>
+
+</div>

@@ -14,38 +14,38 @@ import { Preferencias } from './components/preferencias/preferencias';
 import { ConsultaPronosticoComponent } from './components/consulta-pronostico/consulta-pronostico.component';
 import { RegistroObservacionComponent } from './components/registro-observacion/registro-observacion.component';
 import { RegistroReporteComponent } from './components/registro-reporte/registro-reporte.component';
+import { ListaUsuariosComponent } from './components/lista-usuarios/lista-usuarios.component';
 
 export const routes: Routes = [
   { path: '', component: IndexComponent },
 
   { path: 'login', component: LoginComponent },
 
-  // Registro de cliente / usuario
   { path: 'registrar-cliente', component: RegistroClienteComponent },
   { path: 'registrar-usuario', component: RegistroClienteComponent },
 
-  // Localizaciones
   {
     path: 'registrar-localizacion',
     component: RegistroLocalizacionComponent,
     canActivate: [authGuard, adminGuard]
   },
+
   {
     path: 'lista-localizaciones',
     component: ListaLocalizacionesComponent,
     canActivate: [authGuard]
   },
 
-  // Pronósticos
   {
     path: 'registrar-pronostico',
     component: RegistroPronosticoComponent,
     canActivate: [authGuard, adminGuard]
   },
+  
   {
     path: 'lista-pronostico',
-    component: ListaPronosticoComponent,
-    canActivate: [authGuard]
+    redirectTo: 'consulta-pronostico',
+    pathMatch: 'full'
   },
 
   {
@@ -58,11 +58,13 @@ export const routes: Routes = [
     component: Feedback,
     canActivate: [authGuard]
   },
+
   {
     path: 'notificaciones',
     component: NotificacionesComponent,
     canActivate: [authGuard]
   },
+
   {
     path: 'preferencias',
     component: Preferencias,
@@ -74,16 +76,24 @@ export const routes: Routes = [
     component: ConsultaPronosticoComponent,
     canActivate: [authGuard]
   },
+
   {
     path: 'registro-observacion',
     component: RegistroObservacionComponent,
     canActivate: [authGuard]
   },
+
   {
     path: 'registro-reporte',
     component: RegistroReporteComponent,
     canActivate: [authGuard]
   },
+  
+  {
+  path: 'lista-usuarios',
+  component: ListaUsuariosComponent,
+  canActivate: [authGuard, adminGuard]
+},
 
   { path: '**', redirectTo: '' }
 ];

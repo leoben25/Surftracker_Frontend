@@ -1,91 +1,103 @@
+.pronostico-page {
+  background: #f4f7f6;
+  min-height: 100vh;
+  padding: 35px 20px;
+}
+
 .container {
-  max-width: 1100px;
-  margin: 30px auto;
-  padding: 25px;
+  max-width: 1150px;
+  margin: 0 auto 35px auto;
   background: #ffffff;
-  border-radius: 14px;
+  border-radius: 12px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  padding: 24px;
 }
 
 .titulo {
+  background: #006674;
+  color: white;
+  padding: 18px 22px;
+  border-radius: 8px;
+  margin-bottom: 20px;
   text-align: center;
-  margin-bottom: 25px;
 }
 
 .titulo h2 {
-  color: #0b5f73;
-  font-size: 28px;
   margin: 0;
+  font-size: 28px;
 }
 
-.formulario {
-  width: 100%;
+.titulo p {
+  margin: 8px 0 0 0;
 }
 
 .row {
-  display: flex;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
   margin-bottom: 18px;
 }
 
 .col {
-  flex: 1;
   display: flex;
   flex-direction: column;
 }
 
 label {
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 6px;
   color: #263238;
 }
 
 input,
 select {
-  padding: 10px 12px;
+  padding: 11px;
   border: 1px solid #b0bec5;
-  border-radius: 8px;
+  border-radius: 7px;
   font-size: 14px;
-  outline: none;
-}
-
-input:focus,
-select:focus {
-  border-color: #0097a7;
+  box-sizing: border-box;
 }
 
 small {
   margin-top: 5px;
   color: #c62828;
   font-size: 12px;
+  font-weight: 700;
 }
 
-.acciones {
+.acciones-form {
   text-align: center;
   margin-top: 25px;
 }
 
 button {
-  background: #00796b;
+  background: #006674;
   color: white;
   border: none;
-  padding: 12px 40px;
+  padding: 10px 24px;
   border-radius: 8px;
-  cursor: pointer;
   font-weight: 700;
-  font-size: 15px;
+  cursor: pointer;
 }
 
 button:hover {
-  background: #00695c;
+  background: #004f59;
+}
+
+.btn-secundario {
+  background: #607d8b;
+}
+
+.btn-secundario:hover {
+  background: #455a64;
 }
 
 .mensaje {
   margin-top: 20px;
-  padding: 12px;
+  padding: 13px;
   border-radius: 8px;
-  font-weight: 600;
   text-align: center;
+  font-weight: 700;
 }
 
 .exito {
@@ -98,13 +110,100 @@ button:hover {
   color: #c62828;
 }
 
-@media (max-width: 768px) {
-  .row {
+.lista-container {
+  padding: 0;
+  overflow: hidden;
+}
+
+.resumen {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  background: #eef7f7;
+  padding: 22px;
+}
+
+.resumen div {
+  background: white;
+  padding: 16px 30px;
+  border-radius: 10px;
+  text-align: center;
+  min-width: 180px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.resumen span {
+  display: block;
+  color: #607d8b;
+  font-weight: 700;
+}
+
+.resumen strong {
+  display: block;
+  color: #006674;
+  font-size: 28px;
+  margin-top: 5px;
+}
+
+.buscador {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 15px;
+  align-items: end;
+  padding: 28px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.tabla-contenedor {
+  margin: 0 28px 28px 28px;
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid #d7e3e3;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: #e0f2f1;
+  color: #006674;
+  padding: 13px;
+  text-align: center;
+}
+
+td {
+  padding: 13px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+.sin-datos {
+  margin: 28px;
+  padding: 35px;
+  text-align: center;
+  color: #607d8b;
+  font-weight: 700;
+  border: 1px solid #d7e3e3;
+  border-radius: 10px;
+}
+
+@media (max-width: 850px) {
+  .row,
+  .buscador {
+    grid-template-columns: 1fr;
+  }
+
+  .resumen {
     flex-direction: column;
   }
 
-  .container {
-    margin: 20px;
-    padding: 20px;
+  button {
+    width: 100%;
   }
 }

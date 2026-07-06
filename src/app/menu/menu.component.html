@@ -18,7 +18,7 @@
       Registrar localización
     </a>
 
-    <a *ngIf="isLoggedIn" href="javascript:void(0)" (click)="irAListaLocalizaciones()">
+    <a *ngIf="isLoggedIn && !isAdmin" href="javascript:void(0)" (click)="irAListaLocalizaciones()">
       Lista de Localizaciones
     </a>
 
@@ -26,7 +26,11 @@
       Registrar Pronóstico
     </a>
 
-    <a *ngIf="isLoggedIn" routerLink="/lista-pronostico" routerLinkActive="activo">
+    <a *ngIf="isLoggedIn && isAdmin" routerLink="/lista-usuarios" routerLinkActive="activo">
+      Lista de Usuarios
+    </a>
+
+    <a *ngIf="isLoggedIn && !isAdmin" routerLink="/consulta-pronostico" routerLinkActive="activo">
       Consultar Pronósticos
     </a>
 
@@ -46,15 +50,11 @@
       Preferencias
     </a>
 
-    <a *ngIf="isLoggedIn" routerLink="/consulta-pronostico" routerLinkActive="activo">
-      Consulta Pronóstico
-    </a>
-
-    <a *ngIf="isLoggedIn" routerLink="/registro-observacion" routerLinkActive="activo">
+    <a *ngIf="isLoggedIn && isAdmin" routerLink="/registro-observacion" routerLinkActive="activo">
       Registrar Observación
     </a>
 
-    <a *ngIf="isLoggedIn" routerLink="/registro-reporte" routerLinkActive="activo">
+    <a *ngIf="isLoggedIn && isAdmin" routerLink="/registro-reporte" routerLinkActive="activo">
       Registrar Reporte
     </a>
 

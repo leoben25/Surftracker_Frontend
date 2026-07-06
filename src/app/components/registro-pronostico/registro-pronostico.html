@@ -1,111 +1,178 @@
 <app-menu></app-menu>
 
-<div class="container">
-  <div class="titulo">
-    <h2>Registro de Pronóstico</h2>
+<div class="pronostico-page">
+
+  <div class="container">
+    <div class="titulo">
+      <h2>Registro de Pronóstico</h2>
+    </div>
+
+    <form [formGroup]="forms" (ngSubmit)="registrarPronostico()" class="formulario">
+
+      <div class="row">
+        <div class="col">
+          <label>Localización</label>
+          <select formControlName="idLocalizacion">
+            <option value="">Seleccione una playa</option>
+            <option *ngFor="let item of localizaciones" [value]="obtenerIdLocalizacion(item)">
+              {{ obtenerTextoLocalizacion(item) }}
+            </option>
+          </select>
+
+          <small *ngIf="forms.get('idLocalizacion')?.touched && forms.get('idLocalizacion')?.invalid">
+            La localización es obligatoria.
+          </small>
+        </div>
+
+        <div class="col">
+          <label>Fecha del pronóstico</label>
+          <input type="date" formControlName="fechaPronostico">
+
+          <small *ngIf="forms.get('fechaPronostico')?.touched && forms.get('fechaPronostico')?.invalid">
+            La fecha del pronóstico es obligatoria.
+          </small>
+        </div>
+
+        <div class="col">
+          <label>Temperatura</label>
+          <input type="number" step="0.1" formControlName="temperatura" placeholder="Ejemplo: 22.5">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Altura de olas</label>
+          <input type="number" step="0.1" formControlName="alturaOlas" placeholder="Ejemplo: 1.8">
+        </div>
+
+        <div class="col">
+          <label>Periodo de olas</label>
+          <input type="number" step="0.1" formControlName="periodoOlas" placeholder="Ejemplo: 12">
+        </div>
+
+        <div class="col">
+          <label>Dirección de olas</label>
+          <input type="text" formControlName="direccionOlas" placeholder="Ejemplo: Suroeste">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Velocidad del viento</label>
+          <input type="number" step="0.1" formControlName="velocidadViento" placeholder="Ejemplo: 15">
+        </div>
+
+        <div class="col">
+          <label>Dirección del viento</label>
+          <input type="text" formControlName="direccionViento" placeholder="Ejemplo: Sur">
+        </div>
+
+        <div class="col">
+          <label>Humedad</label>
+          <input type="number" step="0.1" formControlName="humedad" placeholder="Ejemplo: 70">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Lluvia</label>
+          <input type="number" step="0.1" formControlName="lluvia" placeholder="Ejemplo: 0">
+        </div>
+
+        <div class="col">
+          <label>Nubosidad</label>
+          <input type="number" step="0.1" formControlName="nubosidad" placeholder="Ejemplo: 40">
+        </div>
+
+        <div class="col">
+          <label>Radiación solar</label>
+          <input type="number" step="0.1" formControlName="radiacionSolar" placeholder="Ejemplo: 5.5">
+        </div>
+      </div>
+
+      <div class="acciones-form">
+        <button type="submit">Enviar</button>
+      </div>
+    </form>
+
+    <div *ngIf="mensaje" class="mensaje" [class.exito]="tipoMensaje === 'exito'" [class.error]="tipoMensaje === 'error'">
+      {{ mensaje }}
+    </div>
   </div>
 
-  <form [formGroup]="forms" (ngSubmit)="registrarPronostico()" class="formulario">
+  <div class="container lista-container">
+    <div class="titulo">
+      <h2>Pronósticos Registrados</h2>
+      <p>Consulta los pronósticos registrados por playa.</p>
+    </div>
 
-    <div class="row">
-      <div class="col">
-        <label>Localización</label>
-        <select formControlName="idLocalizacion">
-          <option value="">Seleccione una playa</option>
-          <option *ngFor="let item of localizaciones" [value]="item.id">
-            {{ item.nombrePlaya }} - {{ item.distrito || 'Sin distrito' }}
+    <div class="resumen">
+      <div>
+        <span>Total de pronósticos</span>
+        <strong>{{ pronosticos.length }}</strong>
+      </div>
+
+      <div>
+        <span>Resultados visibles</span>
+        <strong>{{ pronosticosFiltrados.length }}</strong>
+      </div>
+    </div>
+
+    <div class="buscador">
+      <div class="campo">
+        <label>Playa / Localización</label>
+        <select [(ngModel)]="idLocalizacionFiltro">
+          <option value="">Todas las playas</option>
+          <option *ngFor="let item of localizaciones" [value]="obtenerIdLocalizacion(item)">
+            {{ obtenerTextoLocalizacion(item) }}
           </option>
         </select>
-
-        <small *ngIf="forms.get('idLocalizacion')?.touched && forms.get('idLocalizacion')?.invalid">
-          La localización es obligatoria.
-        </small>
       </div>
 
-      <div class="col">
-        <label>Fecha del pronóstico</label>
-        <input type="date" formControlName="fechaPronostico">
+      <button type="button" (click)="buscarPorPlaya()">
+        Buscar
+      </button>
 
-        <small *ngIf="forms.get('fechaPronostico')?.touched && forms.get('fechaPronostico')?.invalid">
-          La fecha del pronóstico es obligatoria.
-        </small>
-      </div>
-
-      <div class="col">
-        <label>Temperatura</label>
-        <input type="number" step="0.1" formControlName="temperatura" placeholder="Ejemplo: 22.5">
-      </div>
+      <button type="button" class="btn-secundario" (click)="listarTodos()">
+        Listar todos
+      </button>
     </div>
 
-    <div class="row">
-      <div class="col">
-        <label>Altura de olas</label>
-        <input type="number" step="0.1" formControlName="alturaOlas" placeholder="Ejemplo: 1.8">
-      </div>
+    <div class="tabla-contenedor" *ngIf="pronosticosFiltrados.length > 0; else sinDatos">
+      <table>
+        <thead>
+          <tr>
+            <th>Playa</th>
+            <th>Fecha</th>
+            <th>Temperatura</th>
+            <th>Altura Olas</th>
+            <th>Periodo</th>
+            <th>Dirección Olas</th>
+            <th>Viento</th>
+            <th>Humedad</th>
+          </tr>
+        </thead>
 
-      <div class="col">
-        <label>Periodo de olas</label>
-        <input type="number" step="0.1" formControlName="periodoOlas" placeholder="Ejemplo: 12">
-      </div>
-
-      <div class="col">
-        <label>Dirección de olas</label>
-        <input type="text" formControlName="direccionOlas" placeholder="Ejemplo: Suroeste">
-      </div>
+        <tbody>
+          <tr *ngFor="let item of pronosticosFiltrados">
+            <td>{{ obtenerNombrePlayaPorPronostico(item) }}</td>
+            <td>{{ obtenerValor(item.fechaPronostico || item.fechapronostico) }}</td>
+            <td>{{ obtenerValor(item.temperatura) }} °C</td>
+            <td>{{ obtenerValor(item.alturaOlas || item.alturaolas || item.altura_olas) }} m</td>
+            <td>{{ obtenerValor(item.periodoOlas || item.periodoolas || item.periodo_olas) }} s</td>
+            <td>{{ obtenerValor(item.direccionOlas || item.direccionolas || item.direccion_olas) }}</td>
+            <td>{{ obtenerValor(item.velocidadViento || item.velocidadviento || item.velocidad_viento) }} km/h</td>
+            <td>{{ obtenerValor(item.humedad) }} %</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="row">
-      <div class="col">
-        <label>Velocidad del viento</label>
-        <input type="number" step="0.1" formControlName="velocidadViento" placeholder="Ejemplo: 15">
+    <ng-template #sinDatos>
+      <div class="sin-datos">
+        No hay pronósticos para mostrar.
       </div>
-
-      <div class="col">
-        <label>Dirección del viento</label>
-        <input type="text" formControlName="direccionViento" placeholder="Ejemplo: Sur">
-      </div>
-
-      <div class="col">
-        <label>Humedad</label>
-        <input type="number" step="0.1" formControlName="humedad" placeholder="Ejemplo: 70">
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <label>Lluvia</label>
-        <input type="number" step="0.1" formControlName="lluvia" placeholder="Ejemplo: 0">
-      </div>
-
-      <div class="col">
-        <label>Nubosidad</label>
-        <input type="number" step="0.1" formControlName="nubosidad" placeholder="Ejemplo: 40">
-      </div>
-
-      <div class="col">
-        <label>Radiación solar</label>
-        <input type="number" step="0.1" formControlName="radiacionSolar" placeholder="Ejemplo: 5.5">
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <label>ID fuente</label>
-        <input type="number" formControlName="idFuente" placeholder="Opcional">
-      </div>
-
-      <div class="col">
-        <label>ID usuario creador</label>
-        <input type="number" formControlName="idUsuarioCreador" placeholder="Opcional">
-      </div>
-    </div>
-
-    <div class="acciones">
-      <button type="submit">Enviar</button>
-    </div>
-  </form>
-
-  <div *ngIf="mensaje" class="mensaje" [class.exito]="tipoMensaje === 'exito'" [class.error]="tipoMensaje === 'error'">
-    {{ mensaje }}
+    </ng-template>
   </div>
+
 </div>
