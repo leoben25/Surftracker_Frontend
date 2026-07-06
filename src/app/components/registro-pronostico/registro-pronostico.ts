@@ -72,6 +72,7 @@ export class RegistroPronosticoComponent implements OnInit {
   }
 
   const objPronostico: Pronostico = this.limpiarDatos(this.forms.value);
+  console.log('Pronóstico enviado:', objPronostico);
 
   this.pronosticoService.registrarPronostico(objPronostico).subscribe({
     next: () => {
@@ -89,7 +90,7 @@ export class RegistroPronosticoComponent implements OnInit {
   limpiarDatos(data: any): Pronostico {
     return {
       idLocalizacion: Number(data.idLocalizacion),
-      idFuente: data.idFuente ? Number(data.idFuente) : undefined,
+      idFuente: data.idFuente ? Number(data.idFuente) : 1,
       idUsuarioCreador: data.idUsuarioCreador ? Number(data.idUsuarioCreador) : undefined,
       fechaPronostico: data.fechaPronostico,
       temperatura: data.temperatura ? Number(data.temperatura) : undefined,
