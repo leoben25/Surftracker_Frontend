@@ -137,4 +137,31 @@ export class RegistroReporteComponent implements OnInit {
       || item?.id
       || '-';
   }
+
+    obtenerTextoPronostico(item: any): string {
+    if (!item) {
+      return '';
+    }
+
+    const id = item.idPronostico || item.idpronostico || item.id || '-';
+    const localizacion = item.idLocalizacion || item.idlocalizacion || item.localizacion?.idLocalizacion || '-';
+    const fecha = item.fechaPronostico || item.fechapronostico || '-';
+    const temperatura = item.temperatura ?? '-';
+    const alturaOlas = item.alturaOlas ?? item.altura_olas ?? item.alturaolas ?? '-';
+
+    return `Pronóstico #${id} | Loc. ${localizacion} | ${fecha} | Temp. ${temperatura}°C | Olas ${alturaOlas}m`;
+  }
+
+  obtenerTextoObservacion(item: any): string {
+    if (!item) {
+      return '';
+    }
+
+    const id = item.idObservacionReal || item.idObservacion || item.idobservacion || item.id || '-';
+    const fecha = item.fechaObservacion || item.fechaobservacion || '-';
+    const temperatura = item.temperaturaReal ?? item.temperatura ?? '-';
+    const alturaOlas = item.alturaOlasReal ?? item.alturaOlas ?? item.alturaolas ?? '-';
+
+    return `Observación #${id} | ${fecha} | Temp. ${temperatura}°C | Olas ${alturaOlas}m`;
+  }
 }

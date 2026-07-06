@@ -17,7 +17,7 @@
             <select formControlName="pronostico">
               <option [ngValue]="null">Seleccione el pronóstico</option>
               <option *ngFor="let item of listaPronosticos" [ngValue]="item">
-                ID {{ item.idPronostico }} - Fecha: {{ item.fechaPronostico }} - Temp: {{ item.temperatura }}
+                {{ obtenerTextoPronostico(item) }}
               </option>
             </select>
           </div>
@@ -27,7 +27,7 @@
             <select formControlName="observacion">
               <option [ngValue]="null">Seleccione la observación</option>
               <option *ngFor="let item of listaObservaciones" [ngValue]="item">
-                ID {{ obtenerIdObservacion(item) }} - Fecha: {{ item.fechaObservacion }}
+                {{ obtenerTextoObservacion(item) }}
               </option>
             </select>
           </div>
