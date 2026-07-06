@@ -1,0 +1,162 @@
+.feedback-page {
+  background: #f4f7f6;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.feedback-card {
+  max-width: 1050px;
+  margin: 0 auto 40px auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.card-header {
+  background: #006674;
+  color: #ffffff;
+  padding: 25px;
+  text-align: center;
+}
+
+.card-header h2 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.card-header p {
+  margin: 8px 0 0 0;
+}
+
+.card-body {
+  padding: 35px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+label {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+input,
+select,
+textarea {
+  padding: 11px;
+  border: 1px solid #b0bec5;
+  border-radius: 7px;
+  font-size: 14px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+small {
+  margin-top: 5px;
+  color: #c62828;
+  font-size: 12px;
+}
+
+.acciones {
+  text-align: center;
+  margin-top: 25px;
+}
+
+button {
+  background: #006674;
+  color: white;
+  border: none;
+  padding: 11px 28px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #004f59;
+}
+
+.btn-eliminar {
+  background: #c62828;
+}
+
+.btn-eliminar:hover {
+  background: #8e1b1b;
+}
+
+.mensaje {
+  margin-top: 20px;
+  padding: 13px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.exito {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.error {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.filtros {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: end;
+  margin-bottom: 25px;
+}
+
+.tabla-contenedor {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: #e0f2f1;
+  color: #006674;
+  padding: 12px;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.sin-datos {
+  padding: 35px;
+  text-align: center;
+  color: #607d8b;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .form-grid,
+  .filtros {
+    grid-template-columns: 1fr;
+  }
+
+  button {
+    width: 100%;
+  }
+}

@@ -1,7 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Feedback } from '../models/expus.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,32 +10,32 @@ export class FeedbackService {
 
   constructor(private http: HttpClient) {}
 
-  listar(): Observable<Feedback[]> {
-    return this.http.get<Feedback[]>(this.apiUrl);
+  listar(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
 
-  obtenerPorId(id: number): Observable<Feedback> {
-    return this.http.get<Feedback>(`${this.apiUrl}/${id}`);
+  obtenerPorId(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
-  listarPorUsuario(idUsuario: number): Observable<Feedback[]> {
-    return this.http.get<Feedback[]>(`${this.apiUrl}/usuario/${idUsuario}`);
+  listarPorUsuario(idUsuario: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/usuario/${idUsuario}`);
   }
 
-  listarPorPronostico(idPronostico: number): Observable<Feedback[]> {
-    return this.http.get<Feedback[]>(`${this.apiUrl}/pronostico/${idPronostico}`);
+  listarPorPronostico(idPronostico: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/pronostico/${idPronostico}`);
   }
 
-  listarPorCalificacion(calificacion: number): Observable<Feedback[]> {
-    return this.http.get<Feedback[]>(`${this.apiUrl}/calificacion/${calificacion}`);
+  listarPorCalificacion(calificacion: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/calificacion/${calificacion}`);
   }
 
-  guardar(feedback: Feedback): Observable<Feedback> {
-    return this.http.post<Feedback>(`${this.apiUrl}/guardarFeedback`, feedback);
+  guardar(feedback: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/guardarFeedback`, feedback);
   }
 
-  actualizar(id: number, feedback: Feedback): Observable<Feedback> {
-    return this.http.put<Feedback>(`${`${this.apiUrl}`}/${id}`, feedback);
+  actualizar(id: number, feedback: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, feedback);
   }
 
   eliminar(id: number): Observable<void> {

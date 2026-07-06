@@ -1,14 +1,112 @@
 ﻿<app-menu></app-menu>
 
-<div class="notifications-panel">
-  <h3>Alertas y Notificaciones</h3>
-  <div *ngFor="let n of notificaciones" [style.background-color]="n.estadoLectura === 'no leida' ? '#f0f8ff' : '#fff'" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 5px;">
-    <h4>{{ n.titulo }} <span [style.color]="n.nivelRiesgo === 'alto' ? 'red' : 'orange'">({{ n.nivelRiesgo }})</span></h4>
-    <p>{{ n.mensaje }}</p>
-    <small>Enviado: {{ n.fechaEnvio | date:'short' }}</small>
-    
-    <button *ngIf="n.estadoLectura === 'no leida'" (click)="marcarLeida(n.id)" style="margin-left: 15px;">
-      Marcar como le├¡da
-    </button>
+<div class="notificaciones-page">
+
+  <div class="notificaciones-card">
+
+    <div class="card-header">
+      <h2>Alertas y Notificaciones</h2>
+      <p>Revisa las alertas asociadas a tus playas y pronósticos.</p>
+    </div>
+
+    <div class="resumen">
+      <div class="resumen-item">
+        <span>Total</span>
+        <strong>{{ notificaciones.length }}</strong>
+      </div>
+
+      <div class="resumen-item">
+        <span>No leídas</span>
+        <strong>{{ obtenerCantidadNoLeidas() }}</strong>
+      </div>
+    </div>
+
+    <div class="filtros">
+      <div class="campo">
+        <label>Filtrar por estado</label>
+        <select [(ngModel)]="filtroEstado" (change)="aplicarFiltros()">
+          <option value="TODAS">Todas</option>
+          <option value="no leida">No leídas</option>
+          <option value="leida">Leídas</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label>Filtrar por riesgo</label>
+        <select [(ngModel)]="filtroRiesgo" (change)="aplicarFiltros()">
+          <option value="TODOS">Todos</option>
+          <option value="alto">Alto</option>
+          <option value="medio">Medio</option>
+          <option value="bajo">Bajo</option>
+        </select>
+      </div>
+
+      <button type="button" (click)="cargarNotificaciones()">
+        Actualizar
+      </button>
+    </div>
+
+    <div *ngIf="mensaje" class="mensaje" [class.exito]="tipoMensaje === 'exito'" [class.error]="tipoMensaje === 'error'">
+      {{ mensaje }}
+    </div>
+
+    <div *ngIf="notificacionesFiltradas.length > 0; else sinNotificaciones" class="lista-notificaciones">
+
+      <div
+        class="notificacion"
+        *ngFor="let n of notificacionesFiltradas"
+        [class.no-leida]="obtenerEstado(n).toLowerCase() === 'no leida'"
+      >
+
+        <div class="notificacion-header">
+          <div>
+            <h3>{{ n.titulo }}</h3>
+            <span class="localizacion">{{ obtenerLocalizacion(n) }}</span>
+          </div>
+
+          <span class="riesgo" [ngClass]="obtenerClaseRiesgo(n.nivelRiesgo)">
+            {{ obtenerRiesgo(n) }}
+          </span>
+        </div>
+
+        <p class="mensaje-notificacion">
+          {{ n.mensaje }}
+        </p>
+
+        <div class="notificacion-footer">
+          <span>
+            Enviado: {{ n.fechaEnvio | date:'short' }}
+          </span>
+
+          <span>
+            Estado: {{ obtenerEstado(n) }}
+          </span>
+        </div>
+
+        <div class="acciones">
+          <button
+            type="button"
+            *ngIf="obtenerEstado(n).toLowerCase() === 'no leida'"
+            (click)="marcarLeida(n)"
+          >
+            Marcar como leída
+          </button>
+
+          <button type="button" class="btn-eliminar" (click)="eliminarNotificacion(n)">
+            Eliminar
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <ng-template #sinNotificaciones>
+      <div class="sin-datos">
+        No tienes notificaciones para mostrar.
+      </div>
+    </ng-template>
+
   </div>
+
 </div>

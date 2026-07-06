@@ -1,12 +1,125 @@
-﻿<app-menu></app-menu> 
+﻿<app-menu></app-menu>
 
-<div class="container" style="padding: 20px;">
-  <h2>Preferencias del Usuario</h2>
-  <hr>
-  
-  <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; max-width: 600px;">
-    <h4>Ajustes de Notificaciones</h4>
-    <p>Configura c├│mo deseas recibir las alertas de SurfTracker.</p>
-    
+<div class="preferencias-page">
+
+  <div class="preferencias-card">
+    <div class="card-header">
+      <h2>Preferencias del Usuario</h2>
+      <p>Configura cómo deseas recibir información y alertas de SurfTracker.</p>
     </div>
+
+    <div class="card-body">
+
+      <form [formGroup]="forms" (ngSubmit)="registrarPreferencia()">
+
+        <div class="form-grid">
+
+          <div class="campo">
+            <label>Tema de interfaz</label>
+            <select formControlName="tema">
+              <option value="Claro">Claro</option>
+              <option value="Oscuro">Oscuro</option>
+              <option value="Azul">Azul Marino</option>
+            </select>
+
+            <small *ngIf="forms.get('tema')?.touched && forms.get('tema')?.invalid">
+              Seleccione un tema.
+            </small>
+          </div>
+
+          <div class="campo">
+            <label>Frecuencia de notificaciones</label>
+            <select formControlName="frecuenciaNotificaciones">
+              <option value="inmediata">Inmediata</option>
+              <option value="diaria">Diaria</option>
+              <option value="semanal">Semanal</option>
+              <option value="nunca">Nunca</option>
+            </select>
+
+            <small *ngIf="forms.get('frecuenciaNotificaciones')?.touched && forms.get('frecuenciaNotificaciones')?.invalid">
+              Seleccione una frecuencia.
+            </small>
+          </div>
+
+          <div class="campo">
+            <label>Tipo de información preferida</label>
+            <select formControlName="tipoInformacionPreferida">
+              <option value="pronostico">Pronóstico de surf</option>
+              <option value="alertas">Alertas de riesgo</option>
+              <option value="clima">Clima</option>
+              <option value="oleaje">Oleaje</option>
+            </select>
+
+            <small *ngIf="forms.get('tipoInformacionPreferida')?.touched && forms.get('tipoInformacionPreferida')?.invalid">
+              Seleccione el tipo de información.
+            </small>
+          </div>
+
+          <div class="campo checkbox-campo">
+            <label>Alertas</label>
+
+            <div class="checkbox-box">
+              <input type="checkbox" formControlName="recibirAlertas">
+              <span>Recibir alertas importantes</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="acciones">
+          <button type="submit">Guardar Preferencia</button>
+          <button type="button" class="btn-secundario" (click)="restaurarFormulario()">
+            Limpiar
+          </button>
+        </div>
+
+      </form>
+
+      <div *ngIf="mensaje" class="mensaje" [class.exito]="tipoMensaje === 'exito'" [class.error]="tipoMensaje === 'error'">
+        {{ mensaje }}
+      </div>
+
+    </div>
+  </div>
+
+  <div class="preferencias-card">
+    <div class="card-header">
+      <h2>Mis Preferencias Registradas</h2>
+    </div>
+
+    <div class="card-body">
+
+      <div class="tabla-contenedor" *ngIf="listaPreferencias.length > 0; else sinPreferencias">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Tema</th>
+              <th>Frecuencia</th>
+              <th>Recibir Alertas</th>
+              <th>Información Preferida</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let item of listaPreferencias">
+              <td>{{ obtenerIdPreferencia(item) }}</td>
+              <td>{{ obtenerTemaTexto(item.tema) }}</td>
+              <td>{{ obtenerFrecuenciaTexto(item.frecuenciaNotificaciones) }}</td>
+              <td>{{ obtenerTextoAlertas(item.recibirAlertas) }}</td>
+              <td>{{ obtenerInformacionTexto(item.tipoInformacionPreferida) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #sinPreferencias>
+        <div class="sin-datos">
+          Todavía no tienes preferencias registradas.
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+
 </div>

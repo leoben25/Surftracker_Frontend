@@ -1,7 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Notificacion } from '../models/expus.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,40 +10,42 @@ export class NotificacionService {
 
   constructor(private http: HttpClient) {}
 
-  listar(): Observable<Notificacion[]> {
-    return this.http.get<Notificacion[]>(this.apiUrl);
+  listar(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
 
-  obtenerPorId(id: number): Observable<Notificacion> {
-    return this.http.get<Notificacion>(`${this.apiUrl}/${id}`);
+  obtenerPorId(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
-  listarPorUsuario(idUsuario: number): Observable<Notificacion[]> {
-    return this.http.get<Notificacion[]>(`${this.apiUrl}/usuario/${idUsuario}`);
+  listarPorUsuario(idUsuario: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/usuario/${idUsuario}`);
   }
 
-  listarPorEstado(estado: string): Observable<Notificacion[]> {
-    return this.http.get<Notificacion[]>(`${this.apiUrl}/estado/${estado}`);
+  listarPorEstado(estado: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/estado/${estado}`);
   }
 
-  listarPorRiesgo(riesgo: string): Observable<Notificacion[]> {
-    return this.http.get<Notificacion[]>(`${this.apiUrl}/riesgo/${riesgo}`);
+  listarPorRiesgo(riesgo: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/riesgo/${riesgo}`);
   }
 
-  guardar(idUsuario: number, idLocalizacion: number | null, notificacion: Notificacion): Observable<Notificacion> {
+  guardar(idUsuario: number, idLocalizacion: number | null, notificacion: any): Observable<any> {
     let params = new HttpParams().set('idUsuario', idUsuario.toString());
+
     if (idLocalizacion) {
       params = params.set('idLocalizacion', idLocalizacion.toString());
     }
-    return this.http.post<Notificacion>(this.apiUrl, notificacion, { params });
+
+    return this.http.post<any>(this.apiUrl, notificacion, { params });
   }
 
-  actualizar(id: number, notificacion: Notificacion): Observable<Notificacion> {
-    return this.http.put<Notificacion>(`${this.apiUrl}/${id}`, notificacion);
+  actualizar(id: number, notificacion: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, notificacion);
   }
 
-  marcarComoLeida(id: number): Observable<Notificacion> {
-    return this.http.put<Notificacion>(`${this.apiUrl}/${id}/leido`, {});
+  marcarComoLeida(id: number): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}/leido`, {});
   }
 
   eliminar(id: number): Observable<void> {

@@ -1,9 +1,131 @@
-﻿<app-menu></app-menu> 
+﻿<app-menu></app-menu>
 
-<div class="container" style="padding: 20px;">
-  <h2>Gesti├│n de Feedback</h2>
-  <hr>
-  
-  <p>Aqu├¡ mostraremos la lista de comentarios y calificaciones de los usuarios sobre los pron├│sticos de surf.</p>
-  
+<div class="feedback-page">
+
+  <div class="feedback-card">
+    <div class="card-header">
+      <h2>Gestión de Feedback</h2>
+      <p>Registra comentarios y calificaciones sobre los pronósticos de surf.</p>
+    </div>
+
+    <div class="card-body">
+      <form [formGroup]="forms" (ngSubmit)="registrarFeedback()">
+
+        <div class="form-grid">
+          <div class="campo">
+            <label>Pronóstico</label>
+            <select formControlName="idPronostico">
+              <option value="">Seleccione un pronóstico</option>
+              <option *ngFor="let item of listaPronosticos" [value]="item.idPronostico">
+                {{ obtenerTextoPronostico(item) }}
+              </option>
+            </select>
+
+            <small *ngIf="forms.get('idPronostico')?.touched && forms.get('idPronostico')?.invalid">
+              Seleccione un pronóstico.
+            </small>
+          </div>
+
+          <div class="campo">
+            <label>Calificación</label>
+            <select formControlName="calificacion">
+              <option value="">Seleccione una calificación</option>
+              <option value="1">1 - Muy malo</option>
+              <option value="2">2 - Malo</option>
+              <option value="3">3 - Regular</option>
+              <option value="4">4 - Bueno</option>
+              <option value="5">5 - Excelente</option>
+            </select>
+
+            <small *ngIf="forms.get('calificacion')?.touched && forms.get('calificacion')?.invalid">
+              La calificación es obligatoria.
+            </small>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label>Comentario</label>
+          <textarea formControlName="comentario" rows="4" placeholder="Escribe tu comentario sobre el pronóstico"></textarea>
+
+          <small *ngIf="forms.get('comentario')?.touched && forms.get('comentario')?.invalid">
+            Ingrese un comentario válido.
+          </small>
+        </div>
+
+        <div class="acciones">
+          <button type="submit">Registrar Feedback</button>
+        </div>
+
+      </form>
+
+      <div *ngIf="mensaje" class="mensaje" [class.exito]="tipoMensaje === 'exito'" [class.error]="tipoMensaje === 'error'">
+        {{ mensaje }}
+      </div>
+    </div>
   </div>
+
+  <div class="feedback-card">
+    <div class="card-header">
+      <h2>Feedbacks Registrados</h2>
+    </div>
+
+    <div class="card-body">
+
+      <div class="filtros">
+        <div class="campo">
+          <label>Filtrar por calificación</label>
+          <select [(ngModel)]="filtroCalificacion" (change)="aplicarFiltro()">
+            <option value="">Todas</option>
+            <option value="1">1 estrella</option>
+            <option value="2">2 estrellas</option>
+            <option value="3">3 estrellas</option>
+            <option value="4">4 estrellas</option>
+            <option value="5">5 estrellas</option>
+          </select>
+        </div>
+
+        <button type="button" (click)="limpiarFiltro()">Limpiar filtro</button>
+      </div>
+
+      <div class="tabla-contenedor" *ngIf="listaFeedbacksFiltrados.length > 0; else sinFeedbacks">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Usuario</th>
+              <th>Pronóstico</th>
+              <th>Calificación</th>
+              <th>Comentario</th>
+              <th>Fecha</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let item of listaFeedbacksFiltrados">
+              <td>{{ obtenerIdFeedback(item) }}</td>
+              <td>{{ obtenerUsuario(item) }}</td>
+              <td>{{ obtenerIdPronostico(item) }}</td>
+              <td>{{ item.calificacion }} / 5</td>
+              <td>{{ item.comentario }}</td>
+              <td>{{ item.fechaFeedback || '-' }}</td>
+              <td>
+                <button type="button" class="btn-eliminar" (click)="eliminarFeedback(item)">
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #sinFeedbacks>
+        <div class="sin-datos">
+          No hay feedbacks registrados.
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+
+</div>

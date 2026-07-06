@@ -1,10 +1,67 @@
 ﻿<app-menu></app-menu>
 
-<div class="container mt-4">
-  <h2>Mis Localizaciones Favoritas</h2>
-  <ul>
-    <li *ngFor="let fav of listaFavoritos">
-      Localizaci├│n ID: {{ fav.localizacion.id }} - Agregado el: {{ fav.fechaAgregado }}
-    </li>
-  </ul>
+<div class="favoritos-page">
+
+  <div class="favoritos-card">
+    <div class="card-header">
+      <h2>Mis Localizaciones Favoritas</h2>
+    </div>
+
+    <div class="card-body">
+
+      <div class="form-agregar">
+        <div class="campo">
+          <label>Seleccione una localización</label>
+          <select [(ngModel)]="idLocalizacionSeleccionada">
+            <option [ngValue]="null">Seleccione una playa</option>
+            <option *ngFor="let loc of listaLocalizaciones" [ngValue]="obtenerIdLocalizacion(loc)">
+              {{ obtenerTextoLocalizacion(loc) }}
+            </option>
+          </select>
+        </div>
+
+        <button type="button" (click)="agregarFavorito()">
+          Agregar a favoritos
+        </button>
+      </div>
+
+      <div *ngIf="mensaje" class="mensaje" [class.exito]="tipoMensaje === 'exito'" [class.error]="tipoMensaje === 'error'">
+        {{ mensaje }}
+      </div>
+
+      <div class="tabla-contenedor" *ngIf="listaFavoritos.length > 0; else sinFavoritos">
+        <table>
+          <thead>
+            <tr>
+              <th>ID Favorito</th>
+              <th>Localización</th>
+              <th>Fecha agregado</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let fav of listaFavoritos">
+              <td>{{ fav.idFavorito || fav.idfavorito || fav.id }}</td>
+              <td>{{ obtenerNombreLocalizacion(fav.localizacion) }}</td>
+              <td>{{ fav.fechaAgregado }}</td>
+              <td>
+                <button type="button" class="btn-eliminar" (click)="eliminarFavorito(fav)">
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #sinFavoritos>
+        <div class="sin-datos">
+          Todavía no tienes localizaciones favoritas.
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+
 </div>
