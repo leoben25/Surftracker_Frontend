@@ -72,6 +72,9 @@ export class RegistroReporteComponent implements OnInit {
   }
 
   registrarReporte(): void {
+    console.log('Se ejecutó registrar reporte');
+    console.log('Formulario:', this.forms?.value);
+    console.log('Formulario válido:', this.forms?.valid);
     this.mensaje = '';
     this.tipoMensaje = '';
 
@@ -111,5 +114,27 @@ export class RegistroReporteComponent implements OnInit {
     }
     if (error?.error?.mensaje) return error.error.mensaje;
     return 'No se pudo procesar el reporte de precisión.';
+  }
+    obtenerIdObservacion(item: any): any {
+    return item?.idObservacionReal
+      || item?.idObservacion
+      || item?.idobservacion
+      || item?.id
+      || '-';
+  }
+
+  obtenerIdReporte(item: any): any {
+    return item?.idReportePrecision
+      || item?.idReporte
+      || item?.idreporte
+      || item?.id
+      || '-';
+  }
+
+  obtenerIdPronostico(item: any): any {
+    return item?.idPronostico
+      || item?.idpronostico
+      || item?.id
+      || '-';
   }
 }

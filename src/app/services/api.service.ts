@@ -41,15 +41,15 @@ export class ApiService {
   }
 
   registrarObservacionReal(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/observacionReal/registrar`, data);
+    return this.http.post(`${this.baseUrl}/observacionReal/registrarObservacionReal`, data);
   }
 
   listarObservacionesReales(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/observacionReal/listaTodos`);
+    return this.http.get(`${this.baseUrl}/observacionReal`);
   }
 
   registrarReportePrecision(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/reportepresicion/registrar`, data);
+    return this.http.post(`${this.baseUrl}/reportepresicion/insertaReporte`, data);
   }
 
   listarTodosReportes(): Observable<any> {
